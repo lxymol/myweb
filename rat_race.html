@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>别卷了 — 慢一点, 活得轻松</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700;900&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: #0f172a;
+      --bg2: #0b2545;
+      --accent1: #ff6b6b;
+      --accent2: #7c5cff;
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.03);
+      --card-padding: 2rem;
+      --max-w: 1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial; color:#e6eef8}
+    body{
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.15), transparent 8%),
+                  radial-gradient(900px 450px at 90% 90%, rgba(255,107,107,0.08), transparent 8%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;align-items:center;justify-content:center;padding:4rem 1rem;
+    }
+
+    .container{
+      width:100%;max-width:var(--max-w);position:relative;overflow:hidden;border-radius:20px;padding:3rem;backdrop-filter: blur(6px);
+      box-shadow: 0 10px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+      background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* animated orbs */
+    .orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:0.9;mix-blend-mode:screen;animation:float 10s ease-in-out infinite}
+    .orb.o1{width:420px;height:420px;left:-120px;top:-80px;background:linear-gradient(45deg,var(--accent2),#25d7ff);animation-duration:16s}
+    .orb.o2{width:320px;height:320px;right:-100px;bottom:-90px;background:linear-gradient(45deg,var(--accent1),#ffd36b);animation-duration:18s}
+    .orb.o3{width:180px;height:180px;left:50%;top:-60px;transform:translateX(-20%);background:linear-gradient(45deg,#7efccf,#7c5cff);animation-duration:12s}
+
+    @keyframes float{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(8deg)}100%{transform:translateY(0) rotate(0deg)}}
+
+    .grid{
+      display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center;
+    }
+    @media (max-width:980px){.grid{grid-template-columns:1fr} .container{padding:2rem}}
+
+    .hero{
+      padding:var(--card-padding);border-radius:16px;background:linear-gradient(180deg,var(--glass),var(--glass-2));border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    }
+    h1{font-family:'Montserrat';font-weight:800;margin:0;font-size:clamp(36px,6vw,64px);letter-spacing: -2px;color:transparent; -webkit-background-clip:text;background-clip:text;background-image:linear-gradient(90deg,#fff,#ffd6e0 30%, #ffd36b 70%)}
+    .subtitle{margin-top:0.6rem;color:rgba(230,238,248,0.85);font-weight:300}
+    p.lead{margin:1.2rem 0 1.6rem;color:rgba(230,238,248,0.9);line-height:1.6}
+
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{padding:0.75rem 1.15rem;border-radius:12px;border:0;font-weight:700;cursor:pointer;backdrop-filter: blur(4px)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent2),#25d7ff);color:#061024;box-shadow:0 6px 18px rgba(124,92,255,0.18);}
+    .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)}
+
+    /* right panel */
+    .card-right{padding:1.2rem;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
+    .stat{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .stat .num{font-weight:800;font-size:20px}
+    .tiny{font-size:12px;color:rgba(230,238,248,0.7)}
+
+    /* tips cards */
+    .tips{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1rem}
+    @media (max-width:980px){.tips{grid-template-columns:1fr}}
+    .tip{padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.02)}
+    .tip h4{margin:0 0 6px 0}
+    .tip p{margin:0;color:rgba(230,238,248,0.85);font-size:14px}
+
+    /* decorative dashed path */
+    .path{position:absolute;left: -6%;top: 40%;width:120%;height:1px;border-top:1px dashed rgba(255,255,255,0.03);transform:rotate(-2deg)}
+
+    footer{margin-top:1.6rem;color:rgba(230,238,248,0.6);font-size:13px}
+
+    /* micro interactions */
+    .toggle{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02)
+    }
+    .switch{width:44px;height:24px;border-radius:20px;background:rgba(255,255,255,0.06);position:relative;padding:3px;cursor:pointer}
+    .knob{width:18px;height:18px;border-radius:50%;background:white;position:absolute;left:3px;top:3px;transition:all .25s cubic-bezier(.2,.9,.3,1)}
+    .switch.on{background:linear-gradient(90deg,var(--accent2),var(--accent1))}
+    .switch.on .knob{left:23px;background:#061024}
+
+    /* little message */
+    .affirm{margin-top:1rem;padding:12px;border-radius:10px;background:linear-gradient(90deg,rgba(124,92,255,0.06),rgba(255,107,107,0.03));color:rgba(230,238,248,0.95)}
+
+    /* confetti */
+    .confetti{position:absolute;inset:0;pointer-events:none}
+    .confetti i{position:absolute;display:block;width:7px;height:10px;background:white;opacity:0.8;transform:rotate(15deg);animation:fall linear infinite}
+    @keyframes fall{0%{transform:translateY(-10vh) rotate(0deg);opacity:1}100%{transform:translateY(120vh) rotate(360deg);opacity:0}}
+
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="path" aria-hidden="true"></div>
+
+    <div class="grid">
+      <section class="hero">
+        <h1>别卷了</h1>
+        <div class="subtitle">慢一点，活得更真实</div>
+        <p class="lead">在社交媒体和竞争压力的推送下，我们很容易失去自己的节奏。别卷了——不代表不努力，而是要用更聪明、更可持续的方式生活和成长。</p>
+
+        <div class="cta">
+          <button class="btn btn-primary" id="breatheBtn">一起深呼吸</button>
+          <button class="btn btn-ghost" id="tipsBtn">查看轻松小贴士 / 打开小游戏</button>
+
+          <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+            <div class="toggle" title="切换：卷/不卷">
+              <span class="tiny">卷</span>
+              <div class="switch" id="modeSwitch" role="switch" aria-checked="false"><span class="knob"></span></div>
+              <span class="tiny">不卷</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="affirm" id="affirm">你已经很棒了。给自己一点余地。</div>
+
+        <footer>想要更平衡的日常？试着给自己定一个每天 30 分钟的“无干扰时间”，去读书、画画或什么都不做。</footer>
+      </section>
+
+      <aside class="card-right">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div>
+            <div class="tiny">你的今天</div>
+            <div style="font-weight:800;font-size:22px">保持清醒 · 轻装上阵</div>
+          </div>
+          <div class="tiny">小工具</div>
+        </div>
+
+        <div class="stat"><div class="num" id="breathCount">0</div><div class="tiny">次深呼吸（本次会话）</div></div>
+
+        <div class="tiny" style="margin-top:6px">轻松小贴士</div>
+        <div class="tips" id="tips">
+          <div class="tip"><h4>时间切片</h4><p>把工作分成 25 分钟一段，中间休息 5 分钟（番茄钟）。效率更高，疲惫感更低。</p></div>
+          <div class="tip"><h4>限定社媒</h4><p>把刷社媒的时间限制在每天固定 20 分钟，避免无意义比较。</p></div>
+          <div class="tip"><h4>学会拒绝</h4><p>不必对每个请求都说“好”。有时候说不，是为更重要的事留出空间。</p></div>
+          <div class="tip"><h4>睡眠优先</h4><p>保证 7-8 小时睡眠，长期下去你的表现会更稳定、创造力更强。</p></div>
+        </div>
+
+        <div style="margin-top:12px">
+          <button class="btn btn-primary" id="saveBtn">保存我的节奏</button>
+          <button class="btn btn-ghost" id="resetBtn">重置计数</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+  </div>
+
+  <script>
+    // small interactions
+    const switchEl = document.getElementById('modeSwitch');
+    const affirm = document.getElementById('affirm');
+    const confetti = document.getElementById('confetti');
+    const breatheBtn = document.getElementById('breatheBtn');
+    const breathCountEl = document.getElementById('breathCount');
+    const tipsBtn = document.getElementById('tipsBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let breaths = Number(localStorage.getItem('breaths') || 0);
+    breathCountEl.textContent = breaths;
+
+    function toggleMode(){
+      const on = switchEl.classList.toggle('on');
+      switchEl.setAttribute('aria-checked', on);
+      affirm.textContent = on ? '放轻松，你选择了“不卷”的日子。' : '适度努力，也可以很优秀。';
+      if(on) burstConfetti(24);
+    }
+    switchEl.addEventListener('click', toggleMode);
+
+    // confetti burst
+    function burstConfetti(n){
+      confetti.innerHTML = '';
+      for(let i=0;i<n;i++){
+        const el = document.createElement('i');
+        el.style.left = (Math.random()*100)+'%';
+        el.style.top = (-10 - Math.random()*10)+'vh';
+        el.style.width = (6+Math.random()*8)+'px';
+        el.style.height = (8+Math.random()*10)+'px';
+        el.style.opacity = Math.random()*0.9+0.2;
+        el.style.animationDuration = (2+Math.random()*3)+'s';
+        confetti.appendChild(el);
+      }
+      // 清除 confetti
+      setTimeout(()=>{confetti.innerHTML=''},8000);
+    }
+
+    // 呼吸按钮逻辑（简单计数 + 动画）
+    breatheBtn.addEventListener('click', ()=>{
+      breaths++;
+      breathCountEl.textContent = breaths;
+      localStorage.setItem('breaths', breaths);
+      affirm.textContent = '做得好 — 深呼吸一次。';
+      burstConfetti(8);
+    });
+
+    saveBtn.addEventListener('click', ()=>{
+      localStorage.setItem('savedPace', Date.now());
+      affirm.textContent = '你的节奏已保存。别忘了偶尔放慢脚步。';
+    });
+    resetBtn.addEventListener('click', ()=>{breaths=0;breathCountEl.textContent=0;localStorage.removeItem('breaths');affirm.textContent='计数已重置。'});
+
+    // ========== 小游戏功能（动态注入） ==========
+    // 在页面右上角添加“小游戏”入口
+    const gamesBtn = document.createElement('button');
+    gamesBtn.className = 'btn btn-primary';
+    gamesBtn.style.position = 'absolute';
+    gamesBtn.style.right = '2rem';
+    gamesBtn.style.top = '2rem';
+    gamesBtn.style.zIndex = 60;
+    gamesBtn.textContent = '小游戏';
+    document.querySelector('.container').appendChild(gamesBtn);
+
+    // 游戏面板（模态）
+    const panel = document.createElement('div');
+    panel.style.position='fixed';panel.style.left=0;panel.style.top=0;panel.style.right=0;panel.style.bottom=0;panel.style.display='none';panel.style.alignItems='center';panel.style.justifyContent='center';panel.style.zIndex=70;panel.style.backdropFilter='blur(6px)';
+    panel.innerHTML = `
+      <div style="width:min(920px,95%);max-height:85vh;overflow:auto;border-radius:14px;padding:18px;background:linear-gradient(180deg,rgba(6,16,36,0.96),rgba(12,26,48,0.98));border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 60px rgba(2,6,23,0.7);color:#eaf6ff">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-weight:800;font-size:18px">别卷了 — 休闲小游戏</div>
+          <div style="display:flex;gap:8px">
+            <button id="closeGames" class="btn btn-ghost">关闭</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.02));">
+            <h3>气泡快点（Bubble Pop）</h3>
+            <p class="tiny">在限定时间内点击移动的彩色气泡，达到目标次数即可获胜。</p>
+            <div id="bubbleArea" style="position:relative;height:220px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);margin-top:8px;overflow:hidden"></div>
+            <div style="display:flex;gap:8px;margin-top:10px;align-items:center">
+              <button id="startBubble" class="btn btn-primary">开始</button>
+              <div class="tiny">目标：<span id="bubbleTarget">10</span> 次 · 时间：<span id="bubbleTime">12</span>s</div>
+              <div style="margin-left:auto" class="tiny">得分：<span id="bubbleScore">0</span></div>
+            </div>
+          </div>
+
+          <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.02));">
+            <h3>快答加减（Quick Math）</h3>
+            <p class="tiny">在时间内回答尽可能多的简单算术题，达到分数即可获胜。</p>
+            <div style="margin-top:8px">
+              <div style="font-size:20px;font-weight:700" id="mathQ">—</div>
+              <input id="mathInput" type="number" style="width:100%;padding:8px;margin-top:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#eaf6ff" />
+            </div>
+            <div style="display:flex;gap:8px;margin-top:10px;align-items:center">
+              <button id="startMath" class="btn btn-primary">开始</button>
+              <div class="tiny">时间：<span id="mathTime">20</span>s · 目标得分：<span id="mathTarget">8</span></div>
+              <div style="margin-left:auto" class="tiny">得分：<span id="mathScore">0</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `;
+    document.body.appendChild(panel);
+
+    document.getElementById('closeGames').addEventListener('click', ()=>{panel.style.display='none'});
+    gamesBtn.addEventListener('click', ()=>{panel.style.display='flex'});
+
+    // ===== Bubble Pop 游戏实现 =====
+    const bubbleArea = panel.querySelector('#bubbleArea');
+    const startBubble = panel.querySelector('#startBubble');
+    const bubbleScoreEl = panel.querySelector('#bubbleScore');
+    const bubbleTargetEl = panel.querySelector('#bubbleTarget');
+    const bubbleTimeEl = panel.querySelector('#bubbleTime');
+
+    let bubbleTimer = null;
+    function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+
+    function spawnBubble(){
+      const b = document.createElement('div');
+      const size = 30 + Math.random()*60;
+      b.style.width = size+'px'; b.style.height = size+'px'; b.style.borderRadius='50%';
+      b.style.position='absolute';
+      b.style.left = randomInt(6, bubbleArea.clientWidth - size - 6) + 'px';
+      b.style.top = randomInt(6, bubbleArea.clientHeight - size - 6) + 'px';
+      b.style.cursor='pointer';
+      b.style.boxShadow='0 6px 18px rgba(0,0,0,0.4)';
+      b.style.background = 'linear-gradient(90deg, rgba('+randomInt(50,255)+','+randomInt(50,255)+','+randomInt(50,255)+',0.95), rgba('+randomInt(50,255)+','+randomInt(50,255)+','+randomInt(50,255)+',0.95))';
+      bubbleArea.appendChild(b);
+      // 点击加分并移除
+      const onClick = ()=>{scoreBubble++; bubbleScoreEl.textContent = scoreBubble; b.remove(); if(scoreBubble>=bubbleTarget){endBubble(true)}};
+      b.addEventListener('click', onClick);
+      // 自动消失
+      setTimeout(()=>{if(b.parentNode) b.remove()}, 1800 + Math.random()*2000);
+    }
+
+    let scoreBubble = 0;
+    function endBubble(win){clearInterval(bubbleTimer);bubbleTimer=null; bubbleArea.innerHTML=''; if(win){showWin('别卷了');} }
+
+    startBubble.addEventListener('click', ()=>{
+      // reset
+      bubbleArea.innerHTML='';scoreBubble=0;bubbleScoreEl.textContent=0;
+      const target = 10; const timeLimit = 12; bubbleTargetEl.textContent = target; bubbleTimeEl.textContent = timeLimit;
+      let timeLeft = timeLimit;
+      bubbleTimer = setInterval(()=>{
+        // 每次随机生成气泡
+        if(Math.random() > 0.3) spawnBubble();
+      }, 600);
+      // 结束计时
+      setTimeout(()=>{
+        if(scoreBubble >= target) endBubble(true); else endBubble(false);
+      }, timeLimit*1000);
+    });
+
+    // ===== Quick Math 游戏实现 =====
+    const startMath = panel.querySelector('#startMath');
+    const mathQ = panel.querySelector('#mathQ');
+    const mathInput = panel.querySelector('#mathInput');
+    const mathScoreEl = panel.querySelector('#mathScore');
+    const mathTargetEl = panel.querySelector('#mathTarget');
+    const mathTimeEl = panel.querySelector('#mathTime');
+
+    let mathTimer = null; let mathScore=0; let mathAnswer=0;
+    function nextMath(){
+      const a = randomInt(1,12); const b = randomInt(1,12);
+      if(Math.random()>0.5){ mathAnswer = a+b; mathQ.textContent = a + ' + ' + b + ' = ?'; }
+      else { mathAnswer = a + b - randomInt(0,3); mathQ.textContent = a + ' + ' + b + ' = ?'; }
+      mathInput.value=''; mathInput.focus();
+    }
+
+    function endMath(win){clearInterval(mathTimer);mathTimer=null; mathQ.textContent='—'; if(win){showWin('别卷了');}}
+
+    startMath.addEventListener('click', ()=>{
+      mathScore = 0; mathScoreEl.textContent = 0; const target = 8; mathTargetEl.textContent = target; const timeLimit = 20; mathTimeEl.textContent = timeLimit;
+      nextMath();
+      const endAt = Date.now() + timeLimit*1000;
+      mathTimer = setInterval(()=>{
+        if(Date.now() > endAt){ if(mathScore >= target) endMath(true); else endMath(false); }
+      },200);
+    });
+
+    mathInput.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        const val = Number(mathInput.value);
+        if(Number.isFinite(val) && mathAnswer!==null){ if(val === mathAnswer){ mathScore++; mathScoreEl.textContent = mathScore; } nextMath(); }
+      }
+    });
+
+    // 全局胜利弹窗
+    function showWin(text){
+      // 显示显眼提示
+      const mod = document.createElement('div');
+      mod.style.position='fixed';mod.style.left=0;mod.style.top=0;mod.style.right=0;mod.style.bottom=0;mod.style.zIndex=120;mod.style.display='flex';mod.style.alignItems='center';mod.style.justifyContent='center';
+      mod.style.background='linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.6))';
+      mod.innerHTML = `<div style="padding:28px 34px;border-radius:16px;background:linear-gradient(90deg,#0b2444,#122a56);color:#fff;font-weight:800;font-size:30px;box-shadow:0 20px 60px rgba(2,6,23,0.8);text-align:center">${text}</div>`;
+      document.body.appendChild(mod);
+      burstConfetti(48);
+      setTimeout(()=>{mod.remove();},3500);
+    }
+
+    // 小提示按钮直接打开小游戏
+    tipsBtn.addEventListener('click', ()=>{panel.style.display='flex'});
+
+    // 关闭模态时清理计时器
+    panel.addEventListener('click', (e)=>{ if(e.target === panel){panel.style.display='none'; if(bubbleTimer){clearInterval(bubbleTimer); bubbleTimer=null} if(mathTimer){clearInterval(mathTimer); mathTimer=null}} });
+
+  </script>
+</body>
+</html>
