@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>别卷了 - 星空版</title>
+<style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body {
+        height: 100vh;
+        overflow: hidden;
+        background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Microsoft YaHei", sans-serif;
+        color: white;
+        cursor: none; /* 隐藏鼠标指针，提升沉浸感 */
+    }
+
+    h1 {
+        font-size: 50px;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5);
+        animation: glow 3s ease-in-out infinite alternate;
+        z-index: 10;
+    }
+
+    @keyframes glow {
+        from { opacity: .7; text-shadow: 0 0 6px #fff, 0 0 16px #8ab4f8; }
+        to   { opacity: 1; text-shadow: 0 0 12px #fff, 0 0 28px #8ab4f8; }
+    }
+
+    canvas {
+        position: absolute;
+        top:0; left:0;
+        width:100%; height:100%;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<h1>马疏通 张恩慧 曾祥令<br>别卷了</h1>
+
+<script>
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.onresize = resize;
+
+    const stars = [];
+    const STAR_COUNT = 160;
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+        stars.push({
+            x: Math.random()*w,
+            y: Math.random()*h,
+            z: Math.random()*3 + 1
+        });
+    }
+
+    let mouseX = w/2, mouseY = h/2;
+    document.addEventListener("mousemove", e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (let s of stars) {
+            const dx = (mouseX - s.x) / 200;
+            const dy = (mouseY - s.y) / 200;
+            s.x += dx * s.z;
+            s.y += dy * s.z;
+
+            if (s.x < 0 || s.x > w || s.y < 0 || s.y > h) {
+                s.x = Math.random()*w;
+                s.y = Math.random()*h;
+            }
+
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.z, 0, Math.PI*2);
+            ctx.fillStyle = "rgba(255,255,255,0.8)";
+            ctx.fill();
+        }
+        requestAnimationFrame(draw);
+    }
+    draw();
+</script>
+
+</body>
+</html>
