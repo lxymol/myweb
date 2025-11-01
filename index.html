@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>傻逼指数分析器</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            height: 100vh;
+            background: radial-gradient(circle, rgba(10,10,15,1) 0%, rgba(34,34,51,1) 100%);
+            background-size: 200% 200%;
+            animation: gradientAnimation 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+            cursor: none;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* 文字样式 */
+        h1 {
+            font-size: 60px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.6), 0 0 45px rgba(0, 255, 255, 0.5);
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px rgba(0, 255, 255, 0.8), 0 0 10px rgba(0, 255, 255, 0.6); }
+            100% { text-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 40px rgba(0, 255, 255, 0.9); }
+        }
+
+        /* 输入框样式 */
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            width: 300px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #00ffff;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            background: #00ffff;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #00b8b8;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+
+        /* 眩光扫描动画 */
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            animation: scan 2s infinite;
+        }
+
+        @keyframes scan {
+            0% { top: -10%; }
+            50% { top: 50%; }
+            100% { top: 110%; }
+        }
+    </style>
+</head>
+<body>
+    <h1>傻逼指数分析器</h1>
+
+    <div class="input-container">
+        <input type="text" id="nameInput" placeholder="请输入姓名" />
+        <button onclick="calculateIndex()">分析傻逼指数</button>
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <!-- 眩光扫描效果 -->
+    <div class="scan-line"></div>
+
+    <script>
+        function calculateIndex() {
+            const name = document.getElementById('nameInput').value.trim();
+            const resultElement = document.getElementById('result');
+
+            // 后门设置
+            if (name === "李祥源") {
+                resultElement.textContent = "傻逼指数：0";
+            } else if (name === "马舒童" || name === "张恩慧" || name === "曾祥令") {
+                resultElement.textContent = "傻逼指数：100";
+            } else if (name === "") {
+                resultElement.textContent = "请输入姓名...";
+            } else {
+                // 随机生成 1-99 之间的傻逼指数
+                const index = Math.floor(Math.random() * 99) + 1;
+                resultElement.textContent = `傻逼指数：${index}`;
+            }
+        }
+    </script>
+</body>
+</html>
